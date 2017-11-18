@@ -29,8 +29,9 @@ Good to know:
 `
 * load Zone.js externally, see this repo's bootstrap.js file
 * edit webpack config, make the webpack JsonP function name unique
-
+`
     "output": {
         ...
         "jsonpFunction": __dirname.split("/").pop().replace(/-/,'')
       },
+`
