@@ -561,7 +561,7 @@ module.exports = {
     "filename": "[name].bundle.js",
     "chunkFilename": "[id].chunk.js",
     "crossOriginLoading": false,
-    "jsonpFunction": "jsonPB"
+    "jsonpFunction": __dirname.split("/").pop().replace(/-/,'')
   },
   "module": {
     "rules": [
