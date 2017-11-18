@@ -22,11 +22,11 @@ Good to know:
 * use angular-cli
 * run `ng eject` in apps to generate explicit webpack config
 * edit webpack config, make Zone.js external
-
+`
     "externals": {
         "zone.js/dist/zone": "Zone"
       },
-
+`
 * load Zone.js externally, see this repo's bootstrap.js file
 * edit webpack config, make the webpack JsonP function name unique
 
