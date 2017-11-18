@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.js"></script>
+    </head>
+    <body>
+        <my-generic-widget app-path="app-a" app-selector="app-root-a" id="widget-a"></my-generic-widget>
+        <my-generic-widget app-path="app-b" app-selector="app-root-b" id="widget-b"></my-generic-widget>
+        <script>
+            var elements = document.querySelectorAll('my-generic-widget');
+
+            elements.forEach(function( el) {
+                require.config({
+                    paths: {
+                        'my-generic-widget': 'bootstrap'
+                    }
+                });
+
+                require(['my-generic-widget'], function (gw) { new gw(el); });
+            });
+        </script>
+    </body>
+</html>
