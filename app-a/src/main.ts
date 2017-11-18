@@ -8,7 +8,5 @@ if (environment.production) {
   enableProdMode();
 }
 
-console.log('Widget A');
-
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
