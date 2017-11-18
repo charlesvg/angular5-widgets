@@ -560,7 +560,8 @@ module.exports = {
     "path": path.join(process.cwd(), "dist"),
     "filename": "[name].bundle.js",
     "chunkFilename": "[id].chunk.js",
-    "crossOriginLoading": false
+    "crossOriginLoading": false,
+    "jsonpFunction": "jsonPB"
   },
   "module": {
     "rules": [
