@@ -7,30 +7,36 @@ define('my-generic-widget', function (widgetInstance) {
     }
 
     gw.prototype.bootstrap = function () {
-        var appPath = this.widget.attributes['app-path'].nodeValue;
+        var appBundleName = this.widget.attributes['app-bundle-name'].nodeValue;
         var appSelector = this.widget.attributes['app-selector'].nodeValue;
 
-        var ctx = require.config({
+        var widgetContext = require.config({
             context: this.widget.id,
             paths: {
-                'inline': appPath + '/dist/inline.bundle',
-                'polyfills': appPath + '/dist/polyfills.bundle',
-                'main': appPath + '/dist/main.bundle',
-                'vendor': appPath + '/dist/vendor.bundle',
-                'styles': appPath + '/dist/styles.bundle'
+                'main': '/dist/' + appBundleName + '.bundle'
             }
         });
+
+      var mainContext = require.config({
+        context: 'my-generic-widget',
+        paths: {
+          'inline': '/dist/inline.bundle',
+          'polyfills': '/dist/polyfills.bundle',
+          'vendor': '/dist/vendor.bundle',
+          'styles': '/dist/styles.bundle'
+        }
+      });
 
         var element = document.createElement(appSelector);
         this.widget.appendChild(element);
 
         var self = this;
-        require(['https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.8.14/zone.js'], function () {
-            ctx(['inline'], function () {
-                ctx(['polyfills'], function () {
-                    ctx(['vendor'], function () {
-                        ctx(['styles'], function () {
-                            ctx(['main'], function () {
+      mainContext(['https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.8.14/zone.js'], function () {
+        mainContext(['inline'], function () {
+          mainContext(['polyfills'], function () {
+            mainContext(['vendor'], function () {
+              mainContext(['styles'], function () {
+                widgetContext(['main'], function () {
                                 console.log('Loaded widget ', self.widget);
                             });
                         });
