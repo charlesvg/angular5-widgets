@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
 const customProperties = require('postcss-custom-properties');
 
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
@@ -821,6 +822,14 @@ module.exports = {
     ]
   },
   "plugins": [
+    new DllReferencePlugin({
+      context: '.',
+      manifest: require(path.join(__dirname, 'dist', 'vendor-manifest.json'))
+    }),
+    new DllReferencePlugin({
+      context: '.',
+      manifest: require(path.join(__dirname, 'dist', 'polyfills-manifest.json'))
+    }),
     new NoEmitOnErrorsPlugin(),
     new CopyWebpackPlugin([
       {
@@ -924,7 +933,7 @@ module.exports = {
       "tsConfigPath": "common/tsconfig.app.json",
       "skipCodeGeneration": true,
       "compilerOptions": {}
-    })
+    }),
   ],
   "node": {
     "fs": "empty",

@@ -21,8 +21,8 @@ define('my-generic-widget', function (widgetInstance) {
         context: 'my-generic-widget',
         paths: {
           'inline': '/dist/inline.bundle',
-          'polyfills': '/dist/polyfills.bundle',
-          'vendor': '/dist/vendor.bundle',
+          'polyfills': '/dist/polyfills.dll',
+          'vendor': '/dist/vendor.dll',
           'styles': '/dist/styles.bundle'
         }
       });
