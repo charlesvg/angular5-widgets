@@ -3,8 +3,9 @@ var app = express();
 
 
 app.use('/', express.static('src'))
-app.use('/app-a', express.static('app-a'))
-app.use('/app-b', express.static('app-b'))
+app.use('/dist', express.static('dist'))
+// app.use('/app-a', express.static('app-a'))
+// app.use('/app-b', express.static('app-b'))
 
 // app.get('/', function (req, res) {
 //     res.send('Hello World')
