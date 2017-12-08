@@ -19,7 +19,7 @@ const { AngularCompilerPlugin } = require('@ngtools/webpack');
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'common', '$$_gendir', 'node_modules');
-const entryPoints = ["sw-register","styles","vendor"];
+const entryPoints = ["inline","polyfills","sw-register","styles","vendor","app-a", "app-b"];
 const minimizeCss = false;
 const baseHref = "";
 const deployUrl = "";
@@ -544,15 +544,15 @@ module.exports = {
       "./node_modules"
     ]
   },
-  "externals": {
-    "zone.js/dist/zone": "Zone"
-  },
   "entry": {
     "app-a": [
       "./widgets/app-a/src/main.ts",
     ],
     "app-b": [
       "./widgets/app-b/src/main.ts",
+    ],
+    "polyfills": [
+      "./common/polyfills.ts"
     ],
     "styles": [
       "./common/styles.scss"
@@ -883,7 +883,6 @@ module.exports = {
     }
     }),
     new AddAssetHtmlPlugin([
-      { filepath: 'dist/zone.bundle.js', includeSourcemap: false },
       { filepath: 'dist/vendor.dll.js', includeSourcemap: false },
     ]),
     new BaseHrefWebpackPlugin({}),

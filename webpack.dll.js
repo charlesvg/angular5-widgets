@@ -5,7 +5,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     entry: {
         'vendor': [
-          './common/polyfills.ts',
           './common/vendor.ts' ]
     },
 
