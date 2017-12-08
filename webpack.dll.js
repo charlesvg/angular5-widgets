@@ -4,8 +4,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
-        'polyfills': [ './common/polyfills.ts' ],
-        'vendor': [ './common/vendor.ts' ]
+        'vendor': [
+          './common/polyfills.ts',
+          './common/vendor.ts' ]
     },
 
     output: {
@@ -41,6 +42,6 @@ module.exports = {
             // output.library option above
             name: '[name]'
         }),
-      new UglifyJsPlugin()
+      // new UglifyJsPlugin()
     ],
 };
