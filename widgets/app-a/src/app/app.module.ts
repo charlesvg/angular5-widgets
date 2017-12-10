@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './components/app.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {HeroService} from './services/hero.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {HttpLoaderFactory} from './factories/http-loader.factory';
+import {HttpLoaderFactory} from './services/http-loader.factory';
+import {MainInterceptor} from './services/main-interceptor';
 
 
 @NgModule({
@@ -33,7 +34,15 @@ import {HttpLoaderFactory} from './factories/http-loader.factory';
     //   InMemoryDataService, { dataEncapsulation: false }
     // )
   ],
-  providers: [HeroService],
+  providers: [
+    HeroService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MainInterceptor,
+      multi: true,
+    }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
