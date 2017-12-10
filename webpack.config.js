@@ -836,6 +836,14 @@ module.exports = {
       },
       {
         "context": "common",
+        "to": ".",
+        "from": {
+          "glob": "api/**/*",
+          "dot": true
+        }
+      },
+      {
+        "context": "common",
         "to": "",
         "from": {
           "glob": "favicon.ico",
