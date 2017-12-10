@@ -2,12 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
-import { AppComponent } from './app.component';
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
-import {HeroService} from "./hero.service";
-import {NoopInterceptor} from "./noop-interceptor";
+import { AppComponent } from './components/app.component';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {HeroService} from './services/hero.service';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {HttpLoaderFactory} from './services/http-loader.factory';
+import {MainInterceptor} from './services/main-interceptor';
+
 
 @NgModule({
   declarations: [
@@ -16,19 +17,28 @@ import {NoopInterceptor} from "./noop-interceptor";
   imports: [
     BrowserModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
 
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    // ,
+    // Warning: HttpClientInMemoryWebApiModule will intercept calls to assets/i18n/en.json
+    // // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // // and returns simulated server responses.
+    // // Remove it when a real server is ready to receive requests.
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // )
   ],
   providers: [
     HeroService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: NoopInterceptor,
+      useClass: MainInterceptor,
       multi: true,
     }
 
