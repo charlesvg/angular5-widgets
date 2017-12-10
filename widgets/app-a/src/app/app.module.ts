@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 import {HeroService} from "./hero.service";
+import {NoopInterceptor} from "./noop-interceptor";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,15 @@ import {HeroService} from "./hero.service";
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],
-  providers: [HeroService],
+  providers: [
+    HeroService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NoopInterceptor,
+      multi: true,
+    }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
