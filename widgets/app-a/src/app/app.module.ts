@@ -1,14 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, InjectionToken } from '@angular/core';
 
 
 import { AppComponent } from './components/app.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import {HeroService} from './services/hero.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {HttpLoaderFactory} from './services/http-loader.factory';
-import {MainInterceptor} from './services/main-interceptor';
-
+import {HttpLoaderFactory} from "./providers/http-loader.factory";
+import {HeroService} from "./providers/hero.service";
+import {MainInterceptor} from "./providers/main-interceptor";
+import {WindowRefService} from "./providers/window-ref";
+import {WidgetPubsubService} from "./providers/widget-pubsub.service";
+import {WidgetPubSubBackbaseService} from "./providers/widget-pubsub-backbase.service";
 
 @NgModule({
   declarations: [
@@ -23,8 +25,7 @@ import {MainInterceptor} from './services/main-interceptor';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
-
+    }),
     // ,
     // Warning: HttpClientInMemoryWebApiModule will intercept calls to assets/i18n/en.json
     // // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -36,11 +37,18 @@ import {MainInterceptor} from './services/main-interceptor';
   ],
   providers: [
     HeroService,
+    WindowRefService,
+    {provide: Window, useValue: window },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MainInterceptor,
       multi: true,
+    },
+    {
+      provide: WidgetPubsubService,
+      useClass: WidgetPubSubBackbaseService
     }
+
 
   ],
   bootstrap: [AppComponent]

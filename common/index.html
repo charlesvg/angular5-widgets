@@ -4,7 +4,29 @@
   <meta charset="utf-8">
   <title>AppA</title>
   <base href="/">
+  <script>
+    var gadgetsCallbacks = {};
+    var gadgets = {
+      pubsub:
+        {
+          subscribe: function(eventName, callback) {
+            if (!gadgetsCallbacks[eventName]) {
+              gadgetsCallbacks[eventName] = [callback];
+            } else {
+              gadgetsCallbacks.push(callback);
+            }
+          },
+          publish: function (eventName, payload) {
+            if (gadgetsCallbacks[eventName]) {
+              gadgetsCallbacks[eventName].forEach(function(callback) {
+                callback(payload);
+              });
+            }
+          }
+        }
+    };
 
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
